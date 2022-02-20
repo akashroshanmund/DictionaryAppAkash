@@ -1,4 +1,4 @@
-package com.example.dictionaryappakash.Fragments
+package com.example.dictionaryappakash.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
