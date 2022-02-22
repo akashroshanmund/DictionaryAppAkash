@@ -5,12 +5,12 @@ import com.example.dictionaryappakash.R
 
 
 data class WordData (
-    val word : String?,
-    val phoneticText : String?,
-    val phoneticAudioUri : String?,
-    val origin : String?,
-    val partOfSpeech: String?,
-    val definition : String?,
-    val synonyms : String?
-)
+    override val word : String? = "",
+    override val phoneticText : String? = "",
+    override val phoneticAudioUri : String?= "",
+    override val origin : String? = "",
+    override val partOfSpeech: String? = "",
+    override val definition : String? = "",
+    override val synonyms : String? = ""
+) : wordDataInterface
 

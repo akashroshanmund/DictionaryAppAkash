@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_Fragment_dest">
+
+
+    <fragment
+        android:id="@+id/home_Fragment_dest"
+        android:name="com.example.dictionaryappakash.fragments.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/search_Fragment_dest" />
+        <action
+            android:id="@+id/action_homeFragment_self"
+            app:destination="@id/home_Fragment_dest" />
+        <action
+            android:id="@+id/action_homeFragment_to_emptyFragment"
+            app:destination="@id/empty_Fragment_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/empty_Fragment_dest"
+        android:name="com.example.dictionaryappakash.fragments.EmptyFragment"
+        android:label="fragment_empty"
+        tools:layout="@layout/fragment_empty" >
+        <action
+            android:id="@+id/action_empty_Fragment_dest_to_home_Fragment_dest"
+            app:destination="@id/home_Fragment_dest" />
+        <action
+            android:id="@+id/action_empty_Fragment_dest_to_search_Fragment_dest"
+            app:destination="@id/search_Fragment_dest" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_Fragment_dest"
+        android:name="com.example.dictionaryappakash.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_emptyFragment"
+            app:destination="@id/empty_Fragment_dest" />
+    </fragment>
+</navigation>

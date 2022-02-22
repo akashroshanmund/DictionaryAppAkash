@@ -13,4 +13,13 @@ object constantValues {
     const val JSONString_DEFINITIONSDefinition = "definition"
     const val JSONList_DEFINITIONSSynonyms= "synonyms"
 
+
+
+    const val DEFAULT_STRING= "*Default*"
+    const val EMPTY_STRING= "#Empty#"
+    const val RESULTNotFound= "Result Not Found#"
+    const val DICTSearch= "Search Dictionary"
+
+
+
 }

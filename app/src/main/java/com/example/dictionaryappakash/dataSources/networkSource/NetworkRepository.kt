@@ -2,27 +2,29 @@ package com.example.dictionaryappakash.dataSources.networkSource
 
 import android.util.Log
 import com.example.dictionaryappakash.constantValues
+import com.example.dictionaryappakash.dataSources.CentralRepository
 import com.example.dictionaryappakash.dataSources.WordData
+import com.example.dictionaryappakash.dataSources.localSource.*
+import com.example.dictionaryappakash.dataSources.wordsEntity
 
-import com.example.dictionaryappakash.dataSources.localSource.NetworkData
-import com.example.dictionaryappakash.dataSources.localSource.NetworkServiceBuilder
+import com.example.dictionaryappakash.viewModel.SharedViewModel
 import okhttp3.ResponseBody
 import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.concurrent.thread
 
 
-class NetworkRepository {
+class NetworkRepository() {
     val TAG = "DataFetchRequest"
 
+
     /* make a request to fetch search data from the given api */
-    fun makeRequestForWord(searchWord : String) {
+    fun makeRequestForWord(searchWord : String, centralRepository: CentralRepository) {
 
         var createService = NetworkServiceBuilder.createService(NetworkData::class.java)
         val makeRequest = createService.fetchWord(searchWord)
-
         makeRequest.enqueue(object : Callback<ResponseBody> {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -35,7 +37,14 @@ class NetworkRepository {
                 /* data received successfully */
                 if(response.isSuccessful){
                     val jsonObject = JSONArray(response.body()?.string())
-                    setWordData(jsonObject)
+
+                    val wordData = setWordData(jsonObject)
+                    //centralRepository.updateSharedViewModel(wordData)
+                    centralRepository.insertWordTodataBase(wordData)
+
+                }else{
+                    centralRepository.updateScreenStatus(constantValues.RESULTNotFound)
+
                 }
 
             }
@@ -43,11 +52,13 @@ class NetworkRepository {
         })
     }
 
-    fun setWordData( jsonArray: JSONArray)
+    private fun setWordData( jsonArray: JSONArray):WordData
     {
         val jsonObject = jsonArray.getJSONObject(0)
-        with(jsonObject){
-        WordData(
+
+
+        return   with(jsonObject){
+            WordData(
             try{getString(constantValues?.JSONString_Word)}catch (e: Exception){null},
 
             try{getJSONArray(constantValues?.JSONArray_PHONETICS)?.getJSONObject(0)
