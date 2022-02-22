@@ -1,9 +1,12 @@
 package com.example.dictionaryappakash.dataSources
 
-import androidx.room.ColumnInfo
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.dictionaryappakash.dataSources.wordDataInterface
+
+/*
+* entity structure to store in the database
+* */
 
 @Entity
 data class wordsEntity @JvmOverloads constructor(

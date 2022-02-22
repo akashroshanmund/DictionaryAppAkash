@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.dataSources.CentralRepository
 import com.example.dictionaryappakash.dataSources.WordData
-import kotlin.contracts.contract
 
 class SharedViewModel : ViewModel(){
     val TAG = "ViewModel"
@@ -17,9 +15,6 @@ class SharedViewModel : ViewModel(){
 
     private val _screenStatus = MutableLiveData<String>()
     val screenStatus : LiveData<String> =_screenStatus
-
-    private val _dataFetched = MutableLiveData<Boolean>()
-    val dataFetched : LiveData<Boolean> = _dataFetched
 
 
 
@@ -41,9 +36,7 @@ class SharedViewModel : ViewModel(){
             _centralRepository.value = repository
     }
 
-    fun setDataFetched(bool: Boolean){
-        _dataFetched.value = bool
-    }
+
 
     fun getCentralRepository() : CentralRepository{
         return centralRepository.value!!

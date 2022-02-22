@@ -1,43 +1,39 @@
 package com.example.dictionaryappakash.dataSources
 
 import android.content.Context
-import android.content.Entity
-import androidx.room.Room
+import com.example.dictionaryappakash.constantValues.CacheLimit
+
 import com.example.dictionaryappakash.dataSources.localSource.LocalWordRepository
-import com.example.dictionaryappakash.dataSources.localSource.WordDao
-import com.example.dictionaryappakash.dataSources.localSource.WordDataBase
 import com.example.dictionaryappakash.dataSources.networkSource.NetworkRepository
 import com.example.dictionaryappakash.viewModel.SharedViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlin.concurrent.thread
 
 class CentralRepository(
     val context : Context,
-    val sharedViewModel: SharedViewModel,
+    private val sharedViewModel: SharedViewModel,
     val networkRepo: NetworkRepository = NetworkRepository(),
     val  localWordRepository: LocalWordRepository = LocalWordRepository(context)
 )
+
 {
-
-
+    /* return the latest searched data */
     fun getSearchedWordDataInstance(wordEntityLst : List<wordsEntity>) : WordData =
         localWordRepository.convertWordEntityToWordData(wordEntityLst[0])
 
 
-    fun getAllWordData(): List<WordData>{
-        return  localWordRepository.getLatestData()
-    }
 
-    fun getRecentWords(): List<String>{
-        return localWordRepository.getRecentWords()
-    }
+    /* returns the list of strings  as synonyms */
+    fun getSynonymsList(synonyms : String): List<String>{
+        var res : List<String> = synonyms.split("_").map{
+            it.trim()}
+        return  res
+        }
 
+    /* makes request to search word from the api */
 
-
-
-
-    fun searchForWord(word: String){
+    //TODO
+    fun makeRequestForWord(word: String){
         if(word == ""){
             return
         }
@@ -45,44 +41,37 @@ class CentralRepository(
             networkRepo.makeRequestForWord(word, it) }
     }
 
-    fun updateSharedViewModel(wordData : WordData){
-        sharedViewModel.setWordData(wordData)
-    }
-
+    /* updates the screen status live data */
     fun updateScreenStatus(status : String){
         sharedViewModel.setScreenStatus(status)
     }
 
+    //TODo
     fun insertWordTodataBase(wordData :WordData){
-
-
         GlobalScope.async {
 
             val lst = localWordRepository.localDbRepoDao.getAllData()
-            if(lst.size > 5 && lst.isNotEmpty()){
+
+            /* if database exceed the cachelimit, delet the oldest search */
+            if(lst.size > CacheLimit && lst.isNotEmpty()){
                 localWordRepository.localDbRepoDao.deleterWordData(lst[lst.size-1].Id)
             }
 
-            var isAvailable : Boolean = false
             for(item in lst){
                 if(item.word == wordData.word){
-                   isAvailable = true
+                    localWordRepository.localDbRepoDao.deleterWordData(item.Id)
                    break
                 }
             }
 
-            if(!isAvailable)
-                localWordRepository.insertWordToDatabase(wordData)
+            /* add word to repository */
+            localWordRepository.insertWordToDatabase(wordData)
         }
 
     }
 
-    fun getWordData(word:String):WordData{
-        return localWordRepository.getWordData(word)
-    }
-
+    /* observer for database change */
+    //todo
     fun observeLocalWords() = localWordRepository.observeLocalWords()
-
-
 
 }

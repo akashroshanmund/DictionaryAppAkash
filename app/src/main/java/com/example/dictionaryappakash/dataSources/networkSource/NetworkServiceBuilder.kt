@@ -5,6 +5,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+/* set up retrofit to fetch data from api */
 object NetworkServiceBuilder {
     private val httpClient = OkHttpClient.Builder().build()
 

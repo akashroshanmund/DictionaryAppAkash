@@ -1,9 +1,6 @@
 package com.example.dictionaryappakash.dataSources
 
-import com.example.dictionaryappakash.R
-
-
-
+/* data class to use through the program and to fetch data for UI */
 data class WordData (
     override val word : String? = "",
     override val phoneticText : String? = "",
