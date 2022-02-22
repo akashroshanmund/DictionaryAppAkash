@@ -1,6 +1,7 @@
 package com.example.dictionaryappakash.dataSources
 
 import android.content.Context
+import android.content.Entity
 import androidx.room.Room
 import com.example.dictionaryappakash.dataSources.localSource.LocalWordRepository
 import com.example.dictionaryappakash.dataSources.localSource.WordDao
@@ -21,19 +22,18 @@ class CentralRepository(
 
 
     fun getSearchedWordDataInstance(wordEntityLst : List<wordsEntity>) : WordData =
-        convertWordEntityToWordData(wordEntityLst[0])
+        localWordRepository.convertWordEntityToWordData(wordEntityLst[0])
 
 
-    private fun convertWordEntityToWordData(entity : wordsEntity):WordData =
-         WordData(
-             entity.word,
-             entity.phoneticText,
-             entity.phoneticAudioUri,
-             entity.origin,
-             entity.partOfSpeech,
-             entity.definition,
-             entity.synonyms
-         )
+    fun getAllWordData(): List<WordData>{
+        return  localWordRepository.getLatestData()
+    }
+
+    fun getRecentWords(): List<String>{
+        return localWordRepository.getRecentWords()
+    }
+
+
 
 
 
@@ -54,10 +54,31 @@ class CentralRepository(
     }
 
     fun insertWordTodataBase(wordData :WordData){
+
+
         GlobalScope.async {
-            localWordRepository.insertWordToDatabase(wordData)
+
+            val lst = localWordRepository.localDbRepoDao.getAllData()
+            if(lst.size > 5 && lst.isNotEmpty()){
+                localWordRepository.localDbRepoDao.deleterWordData(lst[lst.size-1].Id)
+            }
+
+            var isAvailable : Boolean = false
+            for(item in lst){
+                if(item.word == wordData.word){
+                   isAvailable = true
+                   break
+                }
+            }
+
+            if(!isAvailable)
+                localWordRepository.insertWordToDatabase(wordData)
         }
 
+    }
+
+    fun getWordData(word:String):WordData{
+        return localWordRepository.getWordData(word)
     }
 
     fun observeLocalWords() = localWordRepository.observeLocalWords()

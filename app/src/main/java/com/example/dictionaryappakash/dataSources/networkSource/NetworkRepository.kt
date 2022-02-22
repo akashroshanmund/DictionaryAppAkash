@@ -1,5 +1,7 @@
 package com.example.dictionaryappakash.dataSources.networkSource
 
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.util.Log
 import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.dataSources.CentralRepository
@@ -41,6 +43,7 @@ class NetworkRepository() {
                     val wordData = setWordData(jsonObject)
                     //centralRepository.updateSharedViewModel(wordData)
                     centralRepository.insertWordTodataBase(wordData)
+                    centralRepository.updateScreenStatus(constantValues.RESULEFOUND)
 
                 }else{
                     centralRepository.updateScreenStatus(constantValues.RESULTNotFound)
@@ -82,6 +85,20 @@ class NetworkRepository() {
         )
             }
 
+    }
+
+    fun playAudio(audioUri:String){
+        Log.d(TAG, "playAudio: ")
+        val mediaplayer : MediaPlayer = MediaPlayer()
+        mediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+
+        try {
+            mediaplayer.setDataSource(audioUri)
+            mediaplayer.prepare()
+            mediaplayer.start()
+        }catch (e : Exception){
+
+        }
     }
 
 }

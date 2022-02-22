@@ -1,5 +1,6 @@
 package com.example.dictionaryappakash.dataSources
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.dictionaryappakash.dataSources.wordDataInterface

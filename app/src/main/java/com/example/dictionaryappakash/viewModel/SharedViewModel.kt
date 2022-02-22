@@ -18,6 +18,10 @@ class SharedViewModel : ViewModel(){
     private val _screenStatus = MutableLiveData<String>()
     val screenStatus : LiveData<String> =_screenStatus
 
+    private val _dataFetched = MutableLiveData<Boolean>()
+    val dataFetched : LiveData<Boolean> = _dataFetched
+
+
 
     private val _internetConnection = MutableLiveData<Boolean>()
     val internetConnection : LiveData<Boolean> = _internetConnection
@@ -35,6 +39,10 @@ class SharedViewModel : ViewModel(){
 
      fun setCentralRepository(repository: CentralRepository){
             _centralRepository.value = repository
+    }
+
+    fun setDataFetched(bool: Boolean){
+        _dataFetched.value = bool
     }
 
     fun getCentralRepository() : CentralRepository{

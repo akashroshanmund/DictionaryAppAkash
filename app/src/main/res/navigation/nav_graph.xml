@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_empty_Fragment_dest_to_search_Fragment_dest"
             app:destination="@id/search_Fragment_dest" />
+        <action
+            android:id="@+id/action_empty_Fragment_dest_to_home_Fragment_dest2"
+            app:destination="@id/home_Fragment_dest" />
     </fragment>
     <fragment
         android:id="@+id/search_Fragment_dest"

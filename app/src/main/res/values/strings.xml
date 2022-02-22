@@ -8,5 +8,6 @@
     <string name="word">"DefaultString"</string>
     <string name="origin">"DefaultString"</string>
     <string name="definition">"DefaultString"</string>
+    <string name="empty">""</string>
 
 </resources>

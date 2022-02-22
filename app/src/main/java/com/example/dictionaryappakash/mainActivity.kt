@@ -1,5 +1,7 @@
 package com.example.dictionaryappakash
 
+import android.media.AudioManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.room.Room
 import com.example.dictionaryappakash.SearchHelper.SearchDebouncingHelper
+import com.example.dictionaryappakash.constantValues.DICTSearch
 import com.example.dictionaryappakash.constantValues.EMPTY_STRING
 import com.example.dictionaryappakash.constantValues.RESULTNotFound
 import com.example.dictionaryappakash.dataSources.CentralRepository
@@ -60,11 +63,12 @@ class mainActivity : AppCompatActivity() {
             ){newText ->
                 newText?.let{
                     if(it.isEmpty() || it == ""){
-                        sharedViewModel.setWordData(WordData(EMPTY_STRING))
-                        sharedViewModel.setScreenStatus(RESULTNotFound)
+                        sharedViewModel.setWordData(WordData(""))
+                        sharedViewModel.setScreenStatus(DICTSearch)
                         Log.d(TAG, "onCreate: Empty")
                     }else{
                         repository.searchForWord(it)
+                        sharedViewModel.setScreenStatus(RESULTNotFound)
                         Log.d(TAG, "onCreate: "+it)
 
                     }

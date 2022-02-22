@@ -17,8 +17,9 @@ object constantValues {
 
     const val DEFAULT_STRING= "*Default*"
     const val EMPTY_STRING= "#Empty#"
-    const val RESULTNotFound= "Result Not Found#"
+    const val RESULTNotFound= "Result Not Found"
     const val DICTSearch= "Search Dictionary"
+    const val RESULEFOUND= "ResultFound"
 
 
 

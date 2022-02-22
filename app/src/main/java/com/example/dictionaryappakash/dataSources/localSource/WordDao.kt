@@ -20,6 +20,16 @@ interface WordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
      fun insertWord(wordEntity: wordsEntity)
 
-    @Query("SELECT * FROM wordsEntity ORDER BY Id DESC LIMIT 6")
-    suspend fun getLatestData():List<wordsEntity>
+
+   @Query("SELECT * FROM wordsEntity ORDER BY Id DESC")
+     fun getAllData() : List<wordsEntity>
+
+    @Query("DELETE FROM wordsEntity WHERE Id = :id")
+    fun deleterWordData(id : Int)
+
+    @Query("SELECT word FROM wordsEntity ORDER BY Id DESC LIMIT 5")
+    fun getRecetnWords(): List<String>
+
+    @Query("SELECT * FROM wordsEntity WHERE word = :word")
+    fun  getWordData(word:String): wordsEntity
 }

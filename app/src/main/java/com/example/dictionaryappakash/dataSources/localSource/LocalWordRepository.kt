@@ -35,6 +35,38 @@ class LocalWordRepository internal constructor(
 
     }
 
+    fun getLatestData():List<WordData> {
+
+       return getWordDataList(localDbRepoDao.getAllData())
+    }
+
+    fun getWordData(word:String): WordData{
+
+        return convertWordEntityToWordData(localDbRepoDao.getWordData(word))
+    }
+
+    fun getRecentWords() : List<String>{
+        return localDbRepoDao.getRecetnWords()
+    }
+
+     fun getWordDataList(lst : List<wordsEntity>): List<WordData>{
+        var datalst : MutableList<WordData> = mutableListOf()
+        for (item in lst)
+            datalst.add(convertWordEntityToWordData(item))
+
+        return datalst
+    }
+
+     fun convertWordEntityToWordData(entity : wordsEntity):WordData =
+        WordData(
+            entity.word,
+            entity.phoneticText,
+            entity.phoneticAudioUri,
+            entity.origin,
+            entity.partOfSpeech,
+            entity.definition,
+            entity.synonyms
+        )
     private fun convertWordDataWordEntity(entity : WordData):wordsEntity =
         wordsEntity(
             0,
