@@ -71,7 +71,6 @@ class mainActivity : AppCompatActivity() {
             Log.d("Pressed", "Empty: ")
             supportFragmentManager.popBackStack()
              svMainSearchView?.setQuery(sharedViewModel.wordData.value?.word,true)
-            //sharedViewModel.setScreenStatus(constantValues.RESULEFOUND)
             supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack("Home").commit()
         }else if(fragment is HomeFragment){
             supportFragmentManager.popBackStack()
