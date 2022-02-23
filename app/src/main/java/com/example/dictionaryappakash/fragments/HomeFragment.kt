@@ -126,6 +126,7 @@ class HomeFragment : Fragment() {
                     else{
                         /* if there is no data in the database, initial the data base with welcome word */
                         sharedViewModel.getCentralRepository().makeRequestForWord("welcome")
+                        sharedViewModel.setWordData(WordData("Welcome"))
                     }
 
                 })
