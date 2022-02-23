@@ -31,9 +31,6 @@ The following **optional** features are implemented:
 * [X] Word pronounciation implemented, so that user can listen to searched word's pronounciation
 * [X] Kotlin language used for design and developement of the software
 
-The following **additional** features are implemented:
-
-* [X] Check network connectivity and update user data accordingly
 
 ## Video Walkthrough
 
@@ -42,11 +39,11 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+* Designing a reusable code with making UI and data separate is always a good challenge to handle. To overcome this challenge I spent relevant amount of time on software designing before jumping into coding.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2022] [Akash Roshan Mund]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
