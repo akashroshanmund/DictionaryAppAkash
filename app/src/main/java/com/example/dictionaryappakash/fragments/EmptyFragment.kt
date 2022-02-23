@@ -49,15 +49,7 @@ class EmptyFragment : Fragment(), IOnBackPressed {
         }
 
        setObservatationActions()
-        requireActivity().onBackPressedDispatcher.addCallback {
-            Log.d("Pressed", "onBackPressed: ")
-        }
 
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                Log.d("Pressed", "onBackPressed: ")
-            }
-        })
     }
 
 
@@ -81,15 +73,10 @@ class EmptyFragment : Fragment(), IOnBackPressed {
     }
 
     override fun onBackPressed(): Boolean {
-
         onDestroyView()
         return true
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("Pressed", "onBackPressed: ")
-    }
 
 
 
