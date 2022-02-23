@@ -34,15 +34,11 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [X] Check network connectivity and update user data accordingly
-* [X] 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
-https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing
-
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+<video src='https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## Notes
 
