@@ -1,6 +1,9 @@
 package com.example.dictionaryappakash.dataSources
 
 import android.content.Context
+import android.widget.Toast
+import androidx.core.content.contentValuesOf
+import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.constantValues.CacheLimit
 
 import com.example.dictionaryappakash.dataSources.localSource.LocalWordRepository
@@ -14,7 +17,7 @@ class CentralRepository(
     private val sharedViewModel: SharedViewModel,
     val networkRepo: NetworkRepository = NetworkRepository(),
     val  localWordRepository: LocalWordRepository = LocalWordRepository(context)
-)
+) : Repository
 
 {
     /* return the latest searched data */
@@ -33,10 +36,14 @@ class CentralRepository(
     /* makes request to search word from the api */
 
     //TODO
-    fun makeRequestForWord(word: String){
-        if(word == ""){
+    override fun makeRequestForWord(word: String){
+        if(word == "" ){
             return
+        }else if(!isConnectedToInternet(context)){
+            Toast.makeText(context,"No Internet Connection", Toast.LENGTH_LONG).show()
+            updateScreenStatus(constantValues.RESULEFOUND)
         }
+
         sharedViewModel.centralRepository.value?.let {
             networkRepo.makeRequestForWord(word, it) }
     }
@@ -45,21 +52,28 @@ class CentralRepository(
     fun updateScreenStatus(status : String){
         sharedViewModel.setScreenStatus(status)
     }
+    fun updateWordData(data : WordData){
+        sharedViewModel.setWordData(data)
+    }
+
+
+    fun getScreenStatus() = sharedViewModel.screenStatus.value
+
 
     //TODo
-    fun insertWordTodataBase(wordData :WordData){
+    override fun insertWordTodataBase(wordData :WordData){
         GlobalScope.async {
 
             val lst = localWordRepository.localDbRepoDao.getAllData()
 
             /* if database exceed the cachelimit, delet the oldest search */
             if(lst.size > CacheLimit && lst.isNotEmpty()){
-                localWordRepository.localDbRepoDao.deleterWordData(lst[lst.size-1].Id)
+                deleterWordData(lst[lst.size-1].Id)
             }
 
             for(item in lst){
                 if(item.word == wordData.word){
-                    localWordRepository.localDbRepoDao.deleterWordData(item.Id)
+                    deleterWordData(item.Id)
                    break
                 }
             }
@@ -70,8 +84,15 @@ class CentralRepository(
 
     }
 
+    override fun isConnectedToInternet(context: Context) = networkRepo.isConnectedToInternet(context)
+
+    override fun deleterWordData(id : Int){
+        localWordRepository.localDbRepoDao.deleterWordData(id)
+    }
+
+
     /* observer for database change */
     //todo
-    fun observeLocalWords() = localWordRepository.observeLocalWords()
+    override fun observeLocalWords() = localWordRepository.observeLocalWords()
 
 }

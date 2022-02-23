@@ -23,6 +23,7 @@ class LocalWordRepository internal constructor(
     fun observeLocalWords(): LiveData<List<wordsEntity>>{
        return localDbRepoDao.observeLocalWords()
     }
+
     //todo
     suspend fun insertWordToDatabase(wordData : WordData){
         withContext(ioDispatcher) {

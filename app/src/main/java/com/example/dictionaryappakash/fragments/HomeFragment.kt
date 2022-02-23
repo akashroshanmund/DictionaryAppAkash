@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.dictionaryappakash.GridAdapter
 import com.example.dictionaryappakash.R
 import com.example.dictionaryappakash.constantValues
@@ -69,6 +71,7 @@ class HomeFragment : Fragment() {
 
         getContext()?.let {
             /* Observe for local data base change */
+            Log.d("trigger", "setObservatationActions:check ")
                 sharedViewModel.getCentralRepository().observeLocalWords()
                 ?.observe(viewLifecycleOwner, Observer {
 
@@ -140,14 +143,30 @@ class HomeFragment : Fragment() {
         * */
         sharedViewModel.screenStatus.observe(viewLifecycleOwner, Observer<String> {
 
-            if(it != constantValues.RESULEFOUND)
-             NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_emptyFragment)
+            if(it != constantValues.RESULEFOUND) {
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, EmptyFragment())?.addToBackStack("tr")?.commit()
+            }
+            // findNavController().navigate(R.id.action_homeFragment_to_emptyFragment)
+
         })
+
+//        sharedViewModel.backPressed.observe(viewLifecycleOwner, Observer<Int> {
+//            if(it == 100){
+//
+//                findNavController().popBackStack()
+//                sharedViewModel.setOnBackPress(50)
+//            }
+//        })
     }
 
     /* call when the audio button pressed */
     fun playAudio(audioString: String){
         sharedViewModel.getCentralRepository().networkRepo.playAudio(audioString)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        homeFragmentBinding = null
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example.dictionaryappakash.dataSources.networkSource
 
+import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.*
+import android.os.Build
 import android.util.Log
 import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.dataSources.CentralRepository
@@ -12,7 +15,7 @@ import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import kotlin.math.log
 
 
 class NetworkRepository() {
@@ -45,7 +48,10 @@ class NetworkRepository() {
 
                     /* insert data to local database and update screen status */
                     centralRepository.insertWordTodataBase(wordData)
-                    centralRepository.updateScreenStatus(constantValues.RESULEFOUND)
+                    if(centralRepository.getScreenStatus() != constantValues.RESULEFOUND) {
+                        centralRepository.updateWordData(wordData)
+                        centralRepository.updateScreenStatus(constantValues.RESULEFOUND)
+                    }
 
                 }else{
                     /* if response is false set result not found */
@@ -115,6 +121,34 @@ class NetworkRepository() {
         }catch (e : Exception){
 
         }
+    }
+     fun isConnectedToInternet(context: Context?): Boolean {
+        if (context == null) return false
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        /*version check*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val state = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (state != null) {
+                when {
+                    state.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                        return true
+                    }
+                    state.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                        return true
+                    }
+                    state.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                        return true
+                    }
+                }
+            }
+        } else {
+            val activeInfo = connectivityManager.activeNetworkInfo
+            if (activeInfo != null && activeInfo.isConnected) {
+                return true
+            }
+        }
+        return false
     }
 
 }

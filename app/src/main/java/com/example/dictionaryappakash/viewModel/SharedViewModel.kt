@@ -16,7 +16,8 @@ class SharedViewModel : ViewModel(){
     private val _screenStatus = MutableLiveData<String>()
     val screenStatus : LiveData<String> =_screenStatus
 
-
+    private val _backPressed = MutableLiveData<Int>()
+    val backPressed : LiveData<Int> =_backPressed
 
     private val _internetConnection = MutableLiveData<Boolean>()
     val internetConnection : LiveData<Boolean> = _internetConnection
@@ -34,6 +35,11 @@ class SharedViewModel : ViewModel(){
 
      fun setCentralRepository(repository: CentralRepository){
             _centralRepository.value = repository
+    }
+
+
+    fun setOnBackPress(i: Int){
+        _backPressed.value = i
     }
 
 

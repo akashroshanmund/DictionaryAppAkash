@@ -14,7 +14,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.EmptyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/tvEmptyTextDisplay"
         android:layout_width="wrap_content"

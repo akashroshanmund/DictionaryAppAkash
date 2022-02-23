@@ -1,15 +1,21 @@
 package com.example.dictionaryappakash.fragments
 
 import android.os.Bundle
+import android.util.Log
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.example.dictionaryappakash.IOnBackPressed
 import com.example.dictionaryappakash.R
 import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.databinding.FragmentEmptyBinding
@@ -22,7 +28,7 @@ import java.util.*
  * Use the [EmptyFragment.newInstance] factory mehod to
  * create an instance of this fragment.
  */
-class EmptyFragment : Fragment() {
+class EmptyFragment : Fragment(), IOnBackPressed {
 
     /* variable initialization */
     val sharedViewModel : SharedViewModel by activityViewModels()
@@ -46,7 +52,16 @@ class EmptyFragment : Fragment() {
             viewModel = sharedViewModel
         }
 
-        setObservatationActions()
+       setObservatationActions()
+        requireActivity().onBackPressedDispatcher.addCallback {
+            Log.d("Pressed", "onBackPressed: ")
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("Pressed", "onBackPressed: ")
+            }
+        })
     }
 
 
@@ -56,9 +71,41 @@ class EmptyFragment : Fragment() {
     private fun setObservatationActions() {
         sharedViewModel.screenStatus.observe(viewLifecycleOwner, Observer<String> {
             if (it == constantValues.RESULEFOUND) {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_empty_Fragment_dest_to_home_Fragment_dest)
+                //findNavController().popBackStack()
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, HomeFragment())?.addToBackStack("empty")?.commit()
+
+                Log.d("resultFound", "setObservatationActions: ")
             }
         })
+
+//        sharedViewModel.backPressed.observe(viewLifecycleOwner, Observer {
+//            if(it == 100){
+//
+//               // sharedViewModel.setScreenStatus(constantValues.RESULEFOUND)
+//                activity?.supportFragmentManager?.popBackStack("empty", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                sharedViewModel.setOnBackPress(50)
+//                Log.d("Pressed", "onBackPressed: 111")
+//
+//            }
+//        })
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        emptyFragmentBinding = null
+    }
+
+    override fun onBackPressed(): Boolean {
+
+        onDestroyView()
+        return true
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("Pressed", "onBackPressed: ")
+    }
+
+
+
 }

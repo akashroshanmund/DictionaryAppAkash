@@ -2,13 +2,18 @@ package com.example.dictionaryappakash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.dictionaryappakash.SearchHelper.SearchDebouncingHelper
 import com.example.dictionaryappakash.constantValues.DICTSearch
 import com.example.dictionaryappakash.dataSources.CentralRepository
 import com.example.dictionaryappakash.dataSources.localSource.*
+import com.example.dictionaryappakash.fragments.EmptyFragment
+import com.example.dictionaryappakash.fragments.HomeFragment
 import com.example.dictionaryappakash.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -55,13 +60,55 @@ class mainActivity : AppCompatActivity() {
         )
 
 
-        /* initialize navigation controller */
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        setupActionBarWithNavController(navController)
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack("Home").commit()
+//        /* initialize navigation controller */
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//        val navController = navHostFragment.navController
+//        setupActionBarWithNavController(navController)
+
+//        /* set observer to look at search status
+//       * status : result not found go to empty fragment
+//       * */
+//        sharedViewModel.screenStatus.observe(this, androidx.lifecycle.Observer {
+//
+//            if(it != constantValues.RESULEFOUND)
+//                supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, EmptyFragment()).addToBackStack(null).commit()
+//        })
+
 
     }
 
+    override fun onBackPressed() {
+        val fragment =
+            this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        if(fragment is EmptyFragment){
+            Log.d("Pressed", "Empty: ")
+            supportFragmentManager.popBackStack()
+             svMainSearchView?.setQuery(sharedViewModel.wordData.value?.word,true)
+            //sharedViewModel.setScreenStatus(constantValues.RESULEFOUND)
+            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack("Home").commit()
+        }else if(fragment is HomeFragment){
+            supportFragmentManager.popBackStack()
+
+            finish()
+        }else{
+            //Log.d("Pressed", "HomeonBackPressed: "+fragment.toString())
+            sharedViewModel.setOnBackPress(100)
+        }
+
+        (fragment as? IOnBackPressed)?.onBackPressed()?.not()?.let {
+            super.onBackPressed()
+        }
+
+        if(supportFragmentManager.backStackEntryCount != 0)
+           supportFragmentManager.popBackStack()
+
+    }
+
+}
+
+interface IOnBackPressed {
+    fun onBackPressed(): Boolean
 }
 
 
