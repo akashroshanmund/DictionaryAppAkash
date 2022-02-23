@@ -117,7 +117,7 @@
                         android:visibility="@{viewModel.wordData.synonyms.equals(@string/empty) ? View.GONE : View.VISIBLE}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:numColumns="3" />
+                        android:numColumns="2" />
 
                 </LinearLayout>
 
