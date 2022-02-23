@@ -29,7 +29,6 @@
             android:orientation="vertical">
 
 
-        <!-- TODO: Update blank fragment layout -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
@@ -93,6 +92,7 @@
                     <TextView
                         android:id="@+id/tvWordDefinition"
                         android:layout_width="wrap_content"
+                        android:textIsSelectable="true"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@{viewModel.wordData.definition}" />

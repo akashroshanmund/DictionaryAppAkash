@@ -9,5 +9,5 @@ data class WordData (
     override val partOfSpeech: String? = "",
     override val definition : String? = "",
     override val synonyms : String? = ""
-) : wordDataInterface
+) : WordDataInterface
 

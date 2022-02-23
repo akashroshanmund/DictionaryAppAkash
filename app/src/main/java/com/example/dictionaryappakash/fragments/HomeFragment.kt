@@ -25,14 +25,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class HomeFragment : Fragment() {
-
-
 
     /* iniitalize variables */
     private var  homeFragmentBinding : FragmentHomeBinding ?= null
@@ -146,17 +140,7 @@ class HomeFragment : Fragment() {
             if(it != constantValues.RESULEFOUND) {
                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, EmptyFragment())?.addToBackStack("tr")?.commit()
             }
-            // findNavController().navigate(R.id.action_homeFragment_to_emptyFragment)
-
         })
-
-//        sharedViewModel.backPressed.observe(viewLifecycleOwner, Observer<Int> {
-//            if(it == 100){
-//
-//                findNavController().popBackStack()
-//                sharedViewModel.setOnBackPress(50)
-//            }
-//        })
     }
 
     /* call when the audio button pressed */

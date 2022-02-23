@@ -109,7 +109,6 @@ class NetworkRepository() {
             }
     }
 
-    //todo
     fun playAudio(audioUri:String){
         Log.d(TAG, "playAudio: ")
         val mediaplayer : MediaPlayer = MediaPlayer()

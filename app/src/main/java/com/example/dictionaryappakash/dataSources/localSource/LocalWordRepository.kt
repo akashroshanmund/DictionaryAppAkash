@@ -18,13 +18,12 @@ class LocalWordRepository internal constructor(
     ).build().wordDao()
 ) {
 
-    //todo
+
     /* observe for dat base change */
     fun observeLocalWords(): LiveData<List<wordsEntity>>{
        return localDbRepoDao.observeLocalWords()
     }
 
-    //todo
     suspend fun insertWordToDatabase(wordData : WordData){
         withContext(ioDispatcher) {
             val wordEntity = convertWordDataWordEntity(wordData)

@@ -34,12 +34,10 @@ class CentralRepository(
         }
 
     /* makes request to search word from the api */
-
-    //TODO
     override fun makeRequestForWord(word: String){
         if(word == "" ){
             return
-        }else if(!isConnectedToInternet(context)){
+        }else if(!isConnectedToInternet(context)){   /* notify if netork is not connected */
             Toast.makeText(context,"No Internet Connection", Toast.LENGTH_LONG).show()
             updateScreenStatus(constantValues.RESULEFOUND)
         }
@@ -60,7 +58,6 @@ class CentralRepository(
     fun getScreenStatus() = sharedViewModel.screenStatus.value
 
 
-    //TODo
     override fun insertWordTodataBase(wordData :WordData){
         GlobalScope.async {
 
@@ -92,7 +89,6 @@ class CentralRepository(
 
 
     /* observer for database change */
-    //todo
     override fun observeLocalWords() = localWordRepository.observeLocalWords()
 
 }

@@ -23,11 +23,7 @@ import com.example.dictionaryappakash.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_empty.*
 import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EmptyFragment.newInstance] factory mehod to
- * create an instance of this fragment.
- */
+
 class EmptyFragment : Fragment(), IOnBackPressed {
 
     /* variable initialization */
@@ -71,23 +67,12 @@ class EmptyFragment : Fragment(), IOnBackPressed {
     private fun setObservatationActions() {
         sharedViewModel.screenStatus.observe(viewLifecycleOwner, Observer<String> {
             if (it == constantValues.RESULEFOUND) {
-                //findNavController().popBackStack()
                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, HomeFragment())?.addToBackStack("empty")?.commit()
 
                 Log.d("resultFound", "setObservatationActions: ")
             }
         })
 
-//        sharedViewModel.backPressed.observe(viewLifecycleOwner, Observer {
-//            if(it == 100){
-//
-//               // sharedViewModel.setScreenStatus(constantValues.RESULEFOUND)
-//                activity?.supportFragmentManager?.popBackStack("empty", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//                sharedViewModel.setOnBackPress(50)
-//                Log.d("Pressed", "onBackPressed: 111")
-//
-//            }
-//        })
     }
 
     override fun onDestroyView() {

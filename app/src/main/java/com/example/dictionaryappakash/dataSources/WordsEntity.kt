@@ -17,7 +17,7 @@ data class wordsEntity @JvmOverloads constructor(
     override var origin: String = "",
     override var partOfSpeech: String = "",
     override var definition: String = "",
-    override var synonyms: String = "") : wordDataInterface
+    override var synonyms: String = "") : WordDataInterface
 {
 
 }

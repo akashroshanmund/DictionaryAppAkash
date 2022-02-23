@@ -2,7 +2,7 @@ package com.example.dictionaryappakash.dataSources
 
 
 /* should be implemented by all the data class */
-interface wordDataInterface {
+interface WordDataInterface {
     val word : String?
     val phoneticText : String?
     val phoneticAudioUri : String?

@@ -61,20 +61,6 @@ class mainActivity : AppCompatActivity() {
 
 
         supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack("Home").commit()
-//        /* initialize navigation controller */
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        val navController = navHostFragment.navController
-//        setupActionBarWithNavController(navController)
-
-//        /* set observer to look at search status
-//       * status : result not found go to empty fragment
-//       * */
-//        sharedViewModel.screenStatus.observe(this, androidx.lifecycle.Observer {
-//
-//            if(it != constantValues.RESULEFOUND)
-//                supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, EmptyFragment()).addToBackStack(null).commit()
-//        })
-
 
     }
 
@@ -89,19 +75,8 @@ class mainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, HomeFragment()).addToBackStack("Home").commit()
         }else if(fragment is HomeFragment){
             supportFragmentManager.popBackStack()
-
             finish()
-        }else{
-            //Log.d("Pressed", "HomeonBackPressed: "+fragment.toString())
-            sharedViewModel.setOnBackPress(100)
         }
-
-        (fragment as? IOnBackPressed)?.onBackPressed()?.not()?.let {
-            super.onBackPressed()
-        }
-
-        if(supportFragmentManager.backStackEntryCount != 0)
-           supportFragmentManager.popBackStack()
 
     }
 
