@@ -1,11 +1,11 @@
 # DictionaryAppAkash
 DictionaryAppGrammarly
 
-DictionaryApp is an android app that allows search for the details of an english word.
+DictionaryApp is an android app that allows user to search for the details of an english word.
 
 Submitted by: **Akash Roshan Mund**
 
-Time spent: **16** hours spent in total. 
+Time spent: **17** hours spent in total. 
             Requiretment Analysis : 1 Hour
             Designing Software: 3 Hours
             Coding: 10 Hours
@@ -14,32 +14,35 @@ Time spent: **16** hours spent in total.
               UI/UX Desing: 4 Hours
               Debugging And Feature Testing : 2 Hours
             Testing : 1 Hour
+            Documentation: 1 Hour
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-* [X] User can **search for english words** from the DictionaryApp
-* [X] User can **see the definition of the searched word** 
-* [X] User can **see the origin of the searched word** 
+* [X] User can **search for english words** from the DictionaryApp, so that the user can get details about the word
+* [X] User can **see the definition of the searched word**
+* [X] User can **see the origin of the searched word**
 * [X] User can **see the synonyms of the searched word** 
 
 The following **optional** features are implemented:
 
-* [X] Search debouncing implemented to reduce network querries and improve user experience
-* [X] Caching implemted to store recently searched words for easy and faster access, even without internet connection
-* [X] Word pronounciation implemented, so that user can listen to searched word's pronounciation
-* [X] Kotlin language used for design and developement of the software
+* [X] **Search debouncing** implemented to reduce network querries and improve user experience
+* [X] **Caching** implemted to store recently searched words for easy and faster access, even without internet connection
+* [X] **Word pronounciation** implemented, so that user can listen to searched word's pronounciation
+* [X] **Word phonetic text** has been shown, so that the use can spell correctly
+* [X] **Kotlin language** used for design and developement of the software
 
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough for the application features:
 [![Watch the video](https://github.com/Akash1Asu/DictionaryAppAkash/blob/master/DictionaryAppScreenshot.jpg)](https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing)
 
-## Notes
+## Challenges
 
 * Designing a reusable code with making UI and data separate is always a good challenge to handle. To overcome this challenge I spent relevant amount of time on software designing before jumping into coding.
+* The given api is not strictly following the Json fields for each search. Null values had to handle carefully
 
 ## License
 
