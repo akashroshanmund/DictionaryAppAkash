@@ -40,7 +40,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing' />
+https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
