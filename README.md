@@ -38,7 +38,7 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-<video src='https://drive.google.com/file/d/1Eni-_Zkiicpa3SIl2I-Q1xUduIKLoLOb/view?usp=sharing' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/Akash1Asu/DictionaryAppAkash/blob/master/DisctionaryAppAkash.gif' title='Video Walkthrough' width='270' height='550' alt='Video Walkthrough' />
 
 ## Notes
 
