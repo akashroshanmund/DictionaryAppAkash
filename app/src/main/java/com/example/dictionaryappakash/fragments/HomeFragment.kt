@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
 
     /* call when the audio button pressed */
     fun playAudio(audioString: String){
-        sharedViewModel.getCentralRepository().networkRepo.playAudio(audioString)
+        sharedViewModel.getCentralRepository().playAudio(audioString)
     }
 
     override fun onDestroyView() {

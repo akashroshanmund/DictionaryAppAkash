@@ -91,4 +91,14 @@ class CentralRepository(
     /* observer for database change */
     override fun observeLocalWords() = localWordRepository.observeLocalWords()
 
+    /* play audio */
+    fun playAudio(audioUri:String){
+
+        if(!isConnectedToInternet(context)){   /* notify if netork is not connected */
+            Toast.makeText(context,"No Internet Connection", Toast.LENGTH_LONG).show()
+        }else{
+            networkRepo.playAudio(audioUri)
+        }
+
+    }
 }
