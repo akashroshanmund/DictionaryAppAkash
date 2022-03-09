@@ -20,26 +20,24 @@ interface WordDao {
 
     /** Insert word details to database */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     fun insertWord(wordEntity: wordsEntity)
+    suspend fun insertWord(wordEntity: wordsEntity)
 
     /**
      * return all the words
      * */
    @Query("SELECT * FROM wordsEntity ORDER BY Id DESC")
-     fun getAllData() : List<wordsEntity>
+   suspend  fun getAllData() : List<wordsEntity>
 
     /**
      * delete a specific row
      * */
     @Query("DELETE FROM wordsEntity WHERE Id = :id")
-    fun deleterWordData(id : Int)
+    suspend fun deleterWordData(id : Int)
 
-    @Query("SELECT word FROM wordsEntity ORDER BY Id DESC LIMIT 5")
-    fun getRecetnWords(): List<String>
 
     /**
      * get a specific word
      * */
     @Query("SELECT * FROM wordsEntity WHERE word = :word")
-    fun  getWordData(word:String): wordsEntity
+    suspend fun  getWordData(word:String): wordsEntity
 }

@@ -20,4 +20,16 @@ data class wordsEntity @JvmOverloads constructor(
     override var synonyms: String = "") : WordDataInterface
 {
 
+    companion object {
+        fun convertWordEntityToWordData(entity: wordsEntity): WordData =
+            WordData(
+                entity.word,
+                entity.phoneticText,
+                entity.phoneticAudioUri,
+                entity.origin,
+                entity.partOfSpeech,
+                entity.definition,
+                entity.synonyms
+            )
+}
 }

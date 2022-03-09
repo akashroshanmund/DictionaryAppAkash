@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.dictionaryappakash.dataSources.CentralRepository
 import com.example.dictionaryappakash.dataSources.WordData
 
+
+
 class SharedViewModel : ViewModel(){
     val TAG = "ViewModel"
 
@@ -23,7 +25,7 @@ class SharedViewModel : ViewModel(){
 
      fun setWordData(data : WordData){
             _wordData.value = data
-            Log.d(TAG, "setWordData: " + data.word)
+
     }
 
      fun setCentralRepository(repository: CentralRepository){

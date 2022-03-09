@@ -20,8 +20,7 @@ import com.example.dictionaryappakash.R
 import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.databinding.FragmentEmptyBinding
 import com.example.dictionaryappakash.viewModel.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_empty.*
-import java.util.*
+
 
 
 class EmptyFragment : Fragment(), IOnBackPressed {
@@ -47,6 +46,7 @@ class EmptyFragment : Fragment(), IOnBackPressed {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
         }
+        Log.i("EmptyFragment", "EmptyFragmentCreated")
 
        setObservatationActions()
 
@@ -57,11 +57,13 @@ class EmptyFragment : Fragment(), IOnBackPressed {
     * status : result found -> go to home fragment
     * */
     private fun setObservatationActions() {
+
         sharedViewModel.screenStatus.observe(viewLifecycleOwner, Observer<String> {
+            Log.i("EmptyFragment", "screenStatusObserve: $it")
             if (it == constantValues.RESULEFOUND) {
                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, HomeFragment())?.addToBackStack("empty")?.commit()
 
-                Log.d("resultFound", "setObservatationActions: ")
+
             }
         })
 

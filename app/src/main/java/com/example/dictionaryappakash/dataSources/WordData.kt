@@ -10,4 +10,18 @@ data class WordData (
     override val definition : String? = "",
     override val synonyms : String? = ""
 ) : WordDataInterface
-
+{
+    companion object {
+        fun convertWordDataToWordEntity(data: WordData): wordsEntity =
+            wordsEntity(
+                0,
+                data.word ?: "",
+                data.phoneticText ?: "",
+                data.phoneticAudioUri ?: "",
+                data.origin ?: "",
+                data.partOfSpeech ?: "",
+                data.definition ?: "",
+                data.synonyms ?: ""
+            )
+    }
+}

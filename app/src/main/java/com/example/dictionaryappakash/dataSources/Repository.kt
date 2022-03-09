@@ -8,11 +8,13 @@ interface Repository {
 
     fun observeLocalWords(): LiveData<List<wordsEntity>>
 
-    fun makeRequestForWord(word :String)
+    suspend fun makeRequestForWord(word :String)
 
-    fun insertWordTodataBase(wordData :WordData)
+    suspend fun insertWordTodataBase(wordData :WordData)
 
-    fun deleterWordData(id : Int)
+    suspend fun deleterWordData(id : Int)
+
+    suspend fun playAudio(audioUri : String)
 
     fun isConnectedToInternet(context : Context) : Boolean
 }

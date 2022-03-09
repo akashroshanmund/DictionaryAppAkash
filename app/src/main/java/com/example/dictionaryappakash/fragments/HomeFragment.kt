@@ -1,6 +1,7 @@
 package com.example.dictionaryappakash.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,19 +12,23 @@ import android.widget.*
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.dictionaryappakash.GridAdapter
 import com.example.dictionaryappakash.R
 import com.example.dictionaryappakash.constantValues
 import com.example.dictionaryappakash.dataSources.WordData
+import com.example.dictionaryappakash.dataSources.localSource.LocalWordRepository
+import com.example.dictionaryappakash.dataSources.localSource.WordDao
 import com.example.dictionaryappakash.databinding.FragmentHomeBinding
 import com.example.dictionaryappakash.viewModel.SharedViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.*
+import dagger.android.support.AndroidSupportInjection
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
@@ -32,6 +37,12 @@ class HomeFragment : Fragment() {
     private var  homeFragmentBinding : FragmentHomeBinding ?= null
     private val sharedViewModel : SharedViewModel by activityViewModels()
 
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +64,7 @@ class HomeFragment : Fragment() {
         }
         homeFragmentBinding?.homeFragment = this
 
+        Log.i("HomeFragment", "HomeFragmentCreated")
         setObservatationActions()
     }
 
@@ -62,17 +74,23 @@ class HomeFragment : Fragment() {
     * */
     private fun setObservatationActions(){
 
+        /* set list view to show all recently searched words */
+        var mListView = view?.findViewById<ListView>(R.id.lvRecentSearch)
+
+
+        /* set grid view to show synonyms */
+        val gridView = view?.findViewById<GridView>(R.id.gridView)
 
         getContext()?.let {
             /* Observe for local data base change */
-            Log.d("trigger", "setObservatationActions:check ")
                 sharedViewModel.getCentralRepository().observeLocalWords()
                 ?.observe(viewLifecycleOwner, Observer {
-
+                    Log.i("HomeFragment", "change in database noticed")
 
                     if(it.size > 0) {
+
                         /* get data in WordData Format */
-                        val lst = sharedViewModel.getCentralRepository().localWordRepository.getWordDataList(it)
+                        val lst = sharedViewModel.getCentralRepository().getWordDataList(it)
 
                         /* get last searched word */
                         val wordData: WordData = sharedViewModel.getCentralRepository().getSearchedWordDataInstance(it)
@@ -81,18 +99,15 @@ class HomeFragment : Fragment() {
                         wordData.word?.let { it1 -> sharedViewModel.setWordData(wordData) }
                         sharedViewModel.setScreenStatus(constantValues.RESULEFOUND)
 
-                        /* set list view to show all recently searched words */
-                        val listAdapter: ArrayAdapter<*>
-                        var mListView = view?.findViewById<ListView>(R.id.lvRecentSearch)
+                        /* max length of lst is 6 : cache limit */
                         var wordList: MutableList<String> = mutableListOf()
 
-                        /* max length of lst is 6 : cache limit */
                         for (item in lst) {
                             item.word?.let { it1 -> wordList.add(it1) }
                         }
 
                         /* set lis adapter */
-                        listAdapter = view?.context?.let { it1 ->
+                        val listAdapter = view?.context?.let { it1 ->
                             ArrayAdapter(
                                 it1,
                                 android.R.layout.simple_list_item_1, wordList
@@ -105,11 +120,12 @@ class HomeFragment : Fragment() {
                         mListView?.setOnItemClickListener { adapterView, view, i, l ->
 
                             /* update local database to listen back from observer, which will refresh the data */
-                            sharedViewModel.getCentralRepository().insertWordTodataBase(lst[i])
+                            GlobalScope.launch {
+                                sharedViewModel.getCentralRepository().insertWordTodataBase(lst[i])
+                            }
+                            Log.i("HomeFragment", "clicked on cache word")
                         }
 
-                        /* set grid view to show synonyms */
-                        val gridView = view?.findViewById<GridView>(R.id.gridView)
                         val mainAdapter = view?.context?.let { it1 ->
                             wordData?.synonyms?.let { it2 ->
                                 sharedViewModel.getCentralRepository().getSynonymsList(
@@ -123,9 +139,11 @@ class HomeFragment : Fragment() {
                         }
                         gridView?.adapter = mainAdapter
                     }
-                    else{
+                    else {
                         /* if there is no data in the database, initial the data base with welcome word */
+                        lifecycleScope.launch {
                         sharedViewModel.getCentralRepository().makeRequestForWord("welcome")
+                    }
                         sharedViewModel.setWordData(WordData("Welcome"))
                     }
 
@@ -146,7 +164,9 @@ class HomeFragment : Fragment() {
 
     /* call when the audio button pressed */
     fun playAudio(audioString: String){
-        sharedViewModel.getCentralRepository().playAudio(audioString)
+        lifecycleScope.launch {
+            sharedViewModel.getCentralRepository().playAudio(audioString)
+        }
     }
 
     override fun onDestroyView() {
