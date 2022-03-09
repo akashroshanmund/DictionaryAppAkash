@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 class mainActivity : AppCompatActivity() {
 
-    /*variable initialization */
+    /* variable initialization */
     val TAG = "MainActivityLog"
     val sharedViewModel: SharedViewModel by viewModels()
 

@@ -60,11 +60,13 @@ class NetworkRepository @Inject constructor(){
                         if (centralRepository.getScreenStatus() != constantValues.RESULEFOUND) {
                             centralRepository.updateWordData(wordData)
                             centralRepository.updateScreenStatus(constantValues.RESULEFOUND)
+                            Log.i(TAG, "Response "+ "Word Found")
                         }
 
                     } else {
                         /* if response is false set result not found */
                         centralRepository.updateScreenStatus(constantValues.RESULTNotFound)
+                        Log.i(TAG, "Response "+ "Word not Found")
                     }
 
             }

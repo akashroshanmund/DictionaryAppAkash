@@ -39,7 +39,7 @@ class CentralRepository  (
 
     override suspend fun insertWordTodataBase(wordData :WordData){
 
-            val lst = localWordRepository.localDbRepoDao.getAllData()
+            val lst = localWordRepository.getAllData()
 
             /* if database exceed the cachelimit, delet the oldest search */
             if(lst.size > CacheLimit && lst.isNotEmpty()){
@@ -63,7 +63,7 @@ class CentralRepository  (
     override fun isConnectedToInternet(context: Context) = AppHelperFunction.isConnectedToInternet(context)
 
     override suspend fun deleterWordData(id : Int){
-        localWordRepository.localDbRepoDao.deleterWordData(id)
+        localWordRepository.deleterWordData(id)
     }
 
 

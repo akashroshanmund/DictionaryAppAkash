@@ -145,6 +145,7 @@ class HomeFragment : Fragment() {
                         sharedViewModel.getCentralRepository().makeRequestForWord("welcome")
                     }
                         sharedViewModel.setWordData(WordData("Welcome"))
+                        Log.i("MainActivity", " Application launched for 1st time, setting up welcome word")
                     }
 
                 })

@@ -1,6 +1,7 @@
 package com.example.dictionaryappakash.dataSources.localSource
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.dictionaryappakash.dataSources.WordData
@@ -27,8 +28,12 @@ class  LocalWordRepository (
     suspend fun insertWordToDatabase(wordData : WordData){
             val wordEntity = WordData.convertWordDataToWordEntity(wordData)
             localDbRepoDao.insertWord(wordEntity)
+        Log.i("Database Operation", "insertWordToDatabase: Word inserted ")
     }
 
+    suspend fun deleterWordData(id : Int) = localDbRepoDao.deleterWordData(id)
+
+    suspend  fun getAllData() = localDbRepoDao.getAllData()
 
 
 }
