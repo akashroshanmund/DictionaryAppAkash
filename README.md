@@ -3,7 +3,7 @@
 
 DictionaryApp is an android app that allows user to search for the details of an english word.
 
-Submitted by: **Akash Roshan Mund**
+Created by: **Akash Roshan Mund**
 
 Time spent: **17** hours spent in total. 
             * Requiretment Analysis : 1 Hour,
