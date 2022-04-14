@@ -1,5 +1,5 @@
 # DictionaryAppAkash
-DictionaryAppGrammarly
+
 
 DictionaryApp is an android app that allows user to search for the details of an english word.
 
